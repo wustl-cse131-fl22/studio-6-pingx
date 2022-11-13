@@ -13,11 +13,14 @@ public class IterativeMethods {
 	 *         ...)
 	 */
 	public static double geometricSum(int n) {
-		double sum = 0.0;
-		for (int power = 1; power <= n; ++power) {
-			sum = sum + Math.pow(0.5, power);
+		if(n==0)
+		{
+			return 0;
 		}
-		return sum;
+		else
+		{
+			return Math.pow(0.5,n)+geometricSum(n-1);
+		}
 	}
 
 	/**
@@ -26,13 +29,22 @@ public class IterativeMethods {
 	 * @return greatest common divisor of p and q
 	 */
 	public static int gcd(int p, int q) {
-		while (q != 0) {
+		/*while (q != 0) {
 			int temp = q;
 			q = p % q;
 			p = temp;
 		}
-		return p;
+		return p;*/
+		
+		if(p%q==0)
+		{return q;}
+		else
+		{
+			return gcd(q,p%q);
+		}
+		
 	}
+	
 
 	/**
 	 * @param array the array to create a reverse of, not to be mutated
@@ -40,17 +52,21 @@ public class IterativeMethods {
 	 */
 	public static int[] toReversed(int[] array) {
 		int[] reversed = new int[array.length];
-		if (array.length > 0) {
-			int lastIndex = array.length - 1;
-			for (int index = 0; index <= array.length / 2; ++index) {
-				int mirrorIndex = lastIndex - index;
-				// note:
-				// since we read from array and write to reversed
-				// we do not need to use a temp variable
-				reversed[index] = array[mirrorIndex];
-				reversed[mirrorIndex] = array[index];
-			}
-		}
+		int index=array.length;
+		index--;
+		reversed=toReversedArray(array,reversed,index);
 		return reversed;
+	}
+	public static int[] toReversedArray(int [] array, int [] reversed, int index)
+	{
+		if(index<0||array.length==0)
+		{
+			return reversed;
+		}
+		else
+		{
+			reversed[index]=array[array.length-1-index];
+			return toReversedArray(array,reversed,index);
+		}
 	}
 }
